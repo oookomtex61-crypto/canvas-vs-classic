@@ -1,17 +1,10 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import html from "../../public/stk/main.html?raw";
 
 export const Route = createFileRoute("/")({
-  beforeLoad: () => {
-    throw redirect({ href: "/stk/main.html#home" });
+  server: {
+    handlers: {
+      GET: () => new Response(html, { headers: { "content-type": "text/html; charset=utf-8" } }),
+    },
   },
-  head: () => ({
-    meta: [
-      { title: "СТК — техника в рабочем ритме" },
-      { name: "description", content: "СТК — ремонт оргтехники, заправка картриджей и обслуживание кассовой техники." },
-      { property: "og:title", content: "СТК — техника в рабочем ритме" },
-      { property: "og:description", content: "Ремонт оргтехники, заправка картриджей и обслуживание кассовой техники." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
 });
