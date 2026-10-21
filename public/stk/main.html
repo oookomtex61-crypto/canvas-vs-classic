@@ -8,7 +8,7 @@
 <div class="toast" role="status"></div>
 <div class="cookie-banner" id="cookie-banner" role="dialog" aria-live="polite" aria-label="Уведомление об использовании cookies и обработке персональных данных" hidden><p>Мы используем файлы cookie и обрабатываем персональные данные для корректной работы сайта. Нажимая «Принять», вы соглашаетесь с <a href="#privacy">Политикой конфиденциальности</a>.</p><button class="button small" id="cookie-accept" type="button">Принять</button></div>
 <script>(function(){var KEY='stk-consent',YEAR=365*24*3600*1000;function accepted(){try{var v=JSON.parse(localStorage.getItem(KEY));return !!(v&&v.until>Date.now())}catch(e){return false}}var b=document.getElementById('cookie-banner');if(!b||accepted())return;b.hidden=false;document.getElementById('cookie-accept').addEventListener('click',function(){try{localStorage.setItem(KEY,JSON.stringify({until:Date.now()+YEAR}))}catch(e){}b.hidden=true})})();</script>
-<script defer src="/stk/enhancements.js"></script>
+<script defer src="/stk/enhancements.js"></script><script defer src="/stk/chat.js"></script>
 <link rel="stylesheet" href="/stk/extras.css"><script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU"></script><script>
 ymaps.ready(function(){var c=[47.24985,38.89135];var m=new ymaps.Map("ymap",{center:[47.24985,38.8912],zoom:17,controls:["zoomControl","fullscreenControl"]});m.behaviors.disable("scrollZoom");
 var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 34" width="44" height="62"><path d="M12 0C5.4 0 0 5.3 0 11.9 0 20.8 12 34 12 34s12-13.2 12-22.1C24 5.3 18.6 0 12 0z" fill="#fc3f1d"/><circle cx="12" cy="12" r="4.6" fill="#fff"/></svg>';
