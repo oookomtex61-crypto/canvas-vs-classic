@@ -6,7 +6,6 @@ function enhancePage(){
   clearInterval(carouselTimer);
   revealObserver?.disconnect();
   const hero=document.querySelector('.hero'), visual=hero?.querySelector('.visual');
-  if(hero){const ruler=document.querySelector('.ruler');if(ruler)ruler.innerHTML='<span class="principle">Диагностика перед работой</span><span class="principle">Согласование до ремонта</span><span class="principle">Для бизнеса и частных клиентов</span>';hero.querySelector('.eyebrow').textContent='01 / СТК · Сервис техники';hero.querySelector('h1').textContent='Техника работает. Вы занимаетесь главным.'}
   if(visual){
     const original=visual.innerHTML;
     visual.classList.add('showcase');
@@ -14,7 +13,7 @@ function enhancePage(){
     const stage=visual.querySelector('.showcase-stage');stage.id='showcase-panel';stage.setAttribute('role','tabpanel');stage.setAttribute('aria-labelledby','showcase-tab-0');
     const play=document.createElement('button');play.type='button';play.className='showcase-play';play.setAttribute('aria-label','Приостановить смену слайдов');play.textContent='Ⅱ';visual.querySelector('.showcase-controls').append(play);
     let playing=!motionQuery.matches,hovered=false,focused=false;
-    function syncPlayback(){clearInterval(carouselTimer);play.textContent=playing?'Пауза':'Старт';play.setAttribute('aria-label',playing?'Приостановить смену слайдов':'Включить смену слайдов');visual.classList.toggle('is-playing',playing&&!hovered&&!focused);if(playing&&!hovered&&!focused)carouselTimer=setInterval(()=>{if(!document.hidden&&visual.isConnected){const rect=visual.getBoundingClientRect();if(rect.bottom>0&&rect.top<window.innerHeight)setSlide(current+1)}},6500)}
+    function syncPlayback(){clearInterval(carouselTimer);play.textContent=playing?'Ⅱ':'▷';play.setAttribute('aria-label',playing?'Приостановить смену слайдов':'Включить смену слайдов');visual.classList.toggle('is-playing',playing&&!hovered&&!focused);if(playing&&!hovered&&!focused)carouselTimer=setInterval(()=>{if(!document.hidden&&visual.isConnected){const rect=visual.getBoundingClientRect();if(rect.bottom>0&&rect.top<window.innerHeight)setSlide(current+1)}},6500)}
     play.addEventListener('click',()=>{playing=!playing;syncPlayback()});
     visual.addEventListener('pointerenter',e=>{if(e.pointerType!=='touch'){hovered=true;syncPlayback()}});visual.addEventListener('pointerleave',()=>{hovered=false;syncPlayback()});
     visual.addEventListener('focusin',()=>{focused=true;syncPlayback()});visual.addEventListener('focusout',e=>{if(!visual.contains(e.relatedTarget)){focused=false;syncPlayback()}});
