@@ -11,9 +11,9 @@ var css=`.fx-btn{position:fixed;right:20px;bottom:20px;width:60px;height:60px;bo
 .fx-msg{max-width:78%;padding:9px 13px;border-radius:18px;font-size:14px;line-height:1.4;white-space:pre-wrap;word-wrap:break-word}
 .fx-bot{align-self:flex-start;background:#e9e9eb;color:#111;border-bottom-left-radius:5px}
 .fx-me{align-self:flex-end;background:#0a84ff;color:#fff;border-bottom-right-radius:5px}
-.fx-form{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line,#ddd)}
+.fx-form{display:flex;align-items:center;gap:8px;padding:10px;border-top:1px solid var(--line,#ddd)}
 .fx-form input{flex:1;border:1px solid var(--line,#ccc);border-radius:20px;padding:9px 14px;font-size:14px;background:transparent;color:inherit;outline:none}
-.fx-form button{width:36px;height:36px;border-radius:50%;border:0;background:#0a84ff;color:#fff;font-size:18px;cursor:pointer}
+.fx-form button{flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:0;background:linear-gradient(180deg,#5df777,#0bbd2a);color:#fff;font-size:20px;font-weight:700;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px #0bbd2a55}
 @media(max-width:760px){.fx-btn{right:12px;bottom:12px}.messengers{bottom:84px!important}.fx-win{right:12px;bottom:84px}}`;
 var s=document.createElement('style');s.textContent=css;document.head.appendChild(s);
 var bubble='<svg viewBox="0 0 24 24" fill="#fff"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.5 1.4 4.7 3.6 6.1-.2 1.3-.9 2.6-1.9 3.6 2 0 3.8-.7 5.1-1.8 1 .2 2.1.3 3.2.3 5.5 0 10-3.6 10-8.1S17.5 3 12 3z"/></svg>';
