@@ -12,7 +12,7 @@ var css=`.fx-btn{position:fixed;right:20px;bottom:20px;width:60px;height:60px;bo
 .fx-bot{align-self:flex-start;background:#e9e9eb;color:#111;border-bottom-left-radius:5px}
 .fx-me{align-self:flex-end;background:#0a84ff;color:#fff;border-bottom-right-radius:5px}
 .fx-form{display:flex;align-items:center;gap:8px;padding:10px;border-top:1px solid var(--line,#ddd)}
-.fx-form input{flex:1;border:1px solid var(--line,#ccc);border-radius:20px;padding:9px 14px;font-size:14px;background:transparent;color:inherit;outline:none}
+.fx-form input{flex:1;margin:0;border:1px solid var(--line,#ccc);border-radius:20px;padding:9px 14px;font-size:14px;background:transparent;color:inherit;outline:none}
 .fx-form button{flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:0;background:linear-gradient(180deg,#5df777,#0bbd2a);color:#fff;font-size:20px;font-weight:700;line-height:1;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 12px #0bbd2a55}
 @media(max-width:760px){.fx-btn{right:12px;bottom:12px}.messengers{bottom:84px!important}.fx-win{right:12px;bottom:84px}}`;
 var s=document.createElement('style');s.textContent=css;document.head.appendChild(s);
