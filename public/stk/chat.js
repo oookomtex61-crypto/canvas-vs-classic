@@ -24,6 +24,11 @@ win.innerHTML='<div class="fx-head"><div class="fx-ava">Ф</div><div><b>Фикс
 document.body.appendChild(win);document.body.appendChild(btn);
 var log=win.querySelector('.fx-log'),input=win.querySelector('input'),sendBtn=win.querySelector('form button');
 var history=[];
+var consentLabel=document.createElement('label');consentLabel.style.cssText='display:flex;align-items:flex-start;gap:8px;padding:8px 14px;font-size:12px;line-height:1.4';
+consentLabel.innerHTML='<input type="checkbox" aria-label="Согласие на передачу заявки" style="margin:0;flex:0 0 auto;width:16px;height:16px"><span>Согласен на обработку моих данных и передачу заявки специалисту в MAX. <a href="#privacy">Политика конфиденциальности</a></span>';
+win.insertBefore(consentLabel,win.querySelector('form'));var consent=consentLabel.querySelector('input');input.maxLength=4000;
+var sessionReady=null;
+function ensureSession(){if(!sessionReady)sessionReady=fetch('/api/chat',{credentials:'same-origin'}).then(function(r){if(!r.ok){sessionReady=null;throw new Error('session')}});return sessionReady}
 function add(t,who){var d=document.createElement('div');d.className='fx-msg '+(who==='me'?'fx-me':'fx-bot');d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
 add('Здравствуйте! Я виртуальный помощник Сервисной Торговой Компании. Могу помочь с вопросами по кассовой технике, принтерам и МФУ, картриджам и весовому оборудованию или оформить обращение специалисту. Чем могу помочь?','bot');
 function toggle(open){win.hidden=!open;if(open)input.focus()}
@@ -34,7 +39,7 @@ e.preventDefault();if(busy)return;var t=input.value.trim();if(!t)return;
 add(t,'me');history.push({role:'user',content:t});input.value='';input.focus();
 busy=true;sendBtn.disabled=true;
 var typing=add('Фиксик печатает…','bot');typing.style.opacity='.6';
-fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:history})})
+ensureSession().then(function(){return fetch('/api/chat',{method:'POST',credentials:'same-origin',headers:{'content-type':'application/json'},body:JSON.stringify({messages:history,leadConsent:consent.checked})})})
 .then(function(r){return r.json().then(function(d){return{ok:r.ok,data:d}})})
 .then(function(res){
 typing.remove();
