@@ -31,7 +31,8 @@ function sanitizeMessages(input: unknown): ChatMessage[] | null {
       });
     }
   }
-  return messages.length > 0 && messages[messages.length - 1].role === "user" ? messages : null;
+  const last = messages[messages.length - 1];
+  return last && last.role === "user" ? messages : null;
 }
 
 async function callGateway(apiKey: string, messages: ChatMessage[]): Promise<Response> {
@@ -104,7 +105,7 @@ export const Route = createFileRoute("/api/chat")({
         const messages = sanitizeMessages(body.messages);
         if (!messages) return json({ error: "Пустое сообщение." }, 400);
 
-        const apiKey = process.env.LOVABLE_API_KEY;
+        const apiKey = process.env["LOVABLE_API_KEY"];
         if (!apiKey) {
           return json({ error: "Ассистент временно недоступен. Позвоните нам: 8 904 347-03-77." }, 500);
         }
