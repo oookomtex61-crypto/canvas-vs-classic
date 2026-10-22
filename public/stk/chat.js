@@ -22,10 +22,26 @@ var btn=document.createElement('button');btn.className='fx-btn';btn.setAttribute
 var win=document.createElement('div');win.className='fx-win';win.hidden=true;win.setAttribute('role','dialog');win.setAttribute('aria-label','Чат с ассистентом Фиксиком');
 win.innerHTML='<div class="fx-head"><div class="fx-ava">Ф</div><div><b>Фиксик</b><small>ИИ-ассистент СТК</small></div><button class="fx-close" aria-label="Закрыть чат">×</button></div><div class="fx-log" aria-live="polite"></div><form class="fx-form"><input type="text" placeholder="Сообщение" aria-label="Сообщение" autocomplete="off"><button type="submit" aria-label="Отправить"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M12 2.4 21.2 12.6h-5.6v9h-7.2v-9H2.8Z"/></svg></button></form>';
 document.body.appendChild(win);document.body.appendChild(btn);
-var log=win.querySelector('.fx-log'),input=win.querySelector('input');
-function add(t,who){var d=document.createElement('div');d.className='fx-msg '+(who==='me'?'fx-me':'fx-bot');d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight}
-add('Здравствуйте, я ассистент Фиксик. Чем могу помочь?','bot');
+var log=win.querySelector('.fx-log'),input=win.querySelector('input'),sendBtn=win.querySelector('form button');
+var history=[];
+function add(t,who){var d=document.createElement('div');d.className='fx-msg '+(who==='me'?'fx-me':'fx-bot');d.textContent=t;log.appendChild(d);log.scrollTop=log.scrollHeight;return d}
+add('Здравствуйте! Я виртуальный помощник Сервисной Торговой Компании. Могу помочь с вопросами по кассовой технике, принтерам и МФУ, картриджам и весовому оборудованию или оформить обращение специалисту. Чем могу помочь?','bot');
 function toggle(open){win.hidden=!open;if(open)input.focus()}
 btn.onclick=function(){toggle(win.hidden)};win.querySelector('.fx-close').onclick=function(){toggle(false)};
-win.querySelector('form').onsubmit=function(e){e.preventDefault();var t=input.value.trim();if(!t)return;add(t,'me');input.value='';input.focus()};
+var busy=false;
+win.querySelector('form').onsubmit=function(e){
+e.preventDefault();if(busy)return;var t=input.value.trim();if(!t)return;
+add(t,'me');history.push({role:'user',content:t});input.value='';input.focus();
+busy=true;sendBtn.disabled=true;
+var typing=add('Фиксик печатает…','bot');typing.style.opacity='.6';
+fetch('/api/chat',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:history})})
+.then(function(r){return r.json().then(function(d){return{ok:r.ok,data:d}})})
+.then(function(res){
+typing.remove();
+if(res.ok&&res.data&&res.data.reply){add(res.data.reply,'bot');history.push({role:'assistant',content:res.data.reply})}
+else{add((res.data&&res.data.error)||'Ассистент временно недоступен. Позвоните нам: 8 904 347-03-77.','bot')}
+})
+.catch(function(){typing.remove();add('Не удалось отправить сообщение. Проверьте соединение и попробуйте ещё раз.','bot')})
+.finally(function(){busy=false;sendBtn.disabled=false;input.focus()});
+};
 })();
