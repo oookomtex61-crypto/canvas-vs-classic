@@ -14,7 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      max_delivery_receipts: {
+        Row: {
+          created_at: string
+          id: string
+          message_id: string | null
+          session_id: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          message_id?: string | null
+          session_id: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_id?: string | null
+          session_id?: string
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
